@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+<br>
+<br>
+<br>
+
+<style type='text/css'>
+    .jumbotron {
+        background-image: url("{% static 'images/maingif.gif' %}");
+        background-size: cover;
+        color: white;
+    }
+</style>
+
+<div class='container'>
+    <div class='jumbotron'>
+        <h1 class='text-center' style="font-weight: bold">한증막.GG에 오신 것을 환영합니다.</h1>
+        <br>
+        <p class='text-center'>한증막.GG는 게임 최저가 비교 사이트입니다.</p>
+        <p class='text-center'>원하는 게임을 가장 저렴한 가격에 구매해보세요.</p>
+        <br>
+        <br>
+        <p class='text-center'><a class='btn btn-warning' href="{% url 'support:list' %}" role="button"  style="font-weight: bold">자세히 알아보기</a></p>    <!--이동할 페이지 정해지면 #에 해당 url 넣기-->
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class='container'>
+    <h3 class='text-left'>지금 좀 쩌는 할인</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/hotdeal1.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Detroit: Become Human puts the destiny of both mankind and androids in your hands, taking you to a near future where machines have become more intelligent than humans.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                        <small class="text-muted" style="text-align: right">종료까지: 23시간 9분</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/hotdeal2.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Welcome to a new world! In Monster Hunter: World, the latest installment in the series, you can enjoy the ultimate hunting experience, using everything at your disposal to hunt monsters in a new world ...</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                        <small class="text-muted" style="text-align: right">종료까지: 23시간 9분</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/hotdeal3.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Play with life and discover the possibilities. Unleash your imagination and create a world of Sims that’s wholly unique. Explore and customize every detail from Sims to homes–and much more.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                        <small class="text-muted" style="text-align: right">종료까지: 23시간 9분</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class='container'>
+    <h3 class='text-left'>모두가 주목 중인 시리즈</h3>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/attention1.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Frostpunk is the first society survival game. As the ruler of the last city on Earth, it is your duty to manage both its citizens and its infrastructure.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="http://127.0.0.1:8000/game/40/detail/" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/attention2.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Tom Clancy's Rainbow Six Siege is the latest installment of the acclaimed first-person shooter franchise developed by the renowned Ubisoft Montreal studio.</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 shadow-sm" style="background-color: #000000">
+                <img src="{% static 'images/attention3.jpg' %}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <p class="card-text" style="color: #CDCDCD">Oxygen Not Included is a space-colony simulation game. Deep inside an alien space rock your industrious crew will need to master science, overcome strange new..</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-warning" style="font-weight: bold">게임으로 이동</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+{% endblock content %}

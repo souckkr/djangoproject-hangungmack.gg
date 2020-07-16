@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}글수정{% endblock title %}
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+<h2>글수정</h2>
+<form method='post' enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit' class='btn btn-warning'>글수정</button>
+    <button type='reset' class='btn btn-warning'>초기화</button>
+</form>
+</div>
+</div>
+</div>
+
+{% endblock content %}

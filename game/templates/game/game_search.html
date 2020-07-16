@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %} SEARCH RESULT {% endblock title %}
+
+{% block content %}
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+<link href="dashboard.css" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #272727">
+        <div class="sidebar-sticky pt-3">
+          <ul class="nav flex-column">
+            <table class = 'table' style="background-color: #000000; color: #ffffff">
+              <br>
+              <thead>
+                  <h5>게임 찾기</h5>
+              </thead>
+              <br>
+              <tbody>
+                <form class="form-inline my-2 my-md-0" method="get" action="{% url 'game:search' %}">
+                  <input class="form-control" type="text" placeholder="게임 이름, 개발사를 입력하세요" aria-label="Search" name="b" value="{{b}}">
+                  <br>
+                  {% for g in genre_list %}
+                  <div class="form-check form-check-inline">
+                      &nbsp;&nbsp;&nbsp;
+                      <input class="form-check-input" type="checkbox" id="inlineCheckbox3" name="f", value={{g}}>
+                      <class class="form-check-label" for="inlineCheckbox5" style="color: #CDCDCD">{{g}}</class>
+                  </div>
+                  {% endfor %}
+
+                  <br>
+
+                  <div class="form-group">
+                    <a href = "#" onclick= "event.stopPropagation()"></a>
+                    <label for="customRange3" style="color: #CDCDCD">가격 범위</label>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select source="[name=price]">
+                        <option value="0">Any Price</option>
+                        <option value="1">20000원 이하</option>
+                        <option value="2">30000원 이하</option>
+                        <option value="3">40000원 이하</option>
+                        <option value="4">50000원 이하</option>
+                        <option value="5">50000원 이상</option>
+                    </select>
+
+                    <input type="range" class="custom-range" value = "0" min="0" max="5" step="1" id="customRange3" name="price", value={{price}}>
+                    <script>
+                        ;(function(){
+                      
+                      function emit(target, name) {
+                        var event
+                        if (document.createEvent) {
+                          event = document.createEvent("HTMLEvents");
+                          event.initEvent(name, true, true);
+                        } else {
+                          event = document.createEventObject();
+                          event.eventType = name;
+                        }
+                    
+                        event.eventName = name;
+                    
+                        if (document.createEvent) {
+                          target.dispatchEvent(event);
+                        } else {
+                          target.fireEvent("on" + event.eventType, event);
+                        }    
+                      }
+                    
+                      var outputsSelector = "input[type=number][source],select[source]";
+                      
+                      function onChange(e) {
+                        var outputs = document.querySelectorAll(outputsSelector)
+                        for (var index = 0; index < outputs.length; index++) {
+                          var item = outputs[index]
+                          var source = document.querySelector(item.getAttribute('source'));
+                          if (source) {
+                            if (item === e.target) {
+                              source.value = item.value
+                              emit(source, 'input')
+                              emit(source, 'change')
+                            }
+                    
+                            if (source === e.target) {
+                              item.value = source.value
+                            }
+                          }
+                        }
+                      }
+                      
+                      document.addEventListener('change', onChange)
+                      document.addEventListener('input', onChange)
+                    }());
+                    </script>
+                  </div>
+                  <button type='submit' class='btn btn-warning'>검색</button>  <!--위에것과 기능은 같음-->
+                  <!-- <button type='reset' class='btn btn-info'>RESET</button> -->
+                </form>
+              </tbody>
+            </table>
+
+            <br>
+            <br>
+          
+            <table class = 'table' style="background-color: #000000; color: #ffffff">
+                <thead>
+                    <h5>특별한 선택</h5>
+                </thead>
+                <tbody>
+                    <a class="nav-link" href="#" style="color: #CDCDCD">
+                      선택 A
+                    </a>
+                    <a class="nav-link" href="#" style="color: #CDCDCD">
+                      선택 B
+                    </a>
+                    <a class="nav-link" href="#" style="color: #CDCDCD">
+                      선택 C
+                    </a>
+                </tbody>
+            </table>
+          </ul>
+        </div>
+      </nav>
+
+      <role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <br>
+        <h2>검색 결과</h2>
+        <br>
+        <table class = 'table' style="color: #ffffff">
+          <thead style="background-color: #000000">
+            <tr align = "center">
+              <th scope="col"> 게임 이미지 </th> 
+              <th scope="col"> 게임 이름 </th>
+              <th scope="col"> 최저가 </th>
+              <th scope="col"> 개발사 </th>
+            </tr>
+        </thead>
+            <tbody style="background-color: #353535">
+              {% for game, min_price in game_lowest_price %}
+              <tr align = "center">
+                  <td style="padding:5px">
+                    {% if game.thumbnail %}
+                    <img src="{{game.thumbnail.url}}" class="thumbnails">
+                    {% endif %}
+                  </td>
+                  <td style="padding:5px">
+                      <a href="{% url 'game:detail' game.pk %}" style="color: #FFC107"><br>{{game.title}}</a> <!--DETAIL과 연결하는 부분 -->
+                   </td>
+                  <td style="padding:5px; color: #CDCDCD"><br>
+                      ₩ {{min_price}}
+                  </td> 
+                  <td style="padding:5px; color: #CDCDCD"><br>
+                      {{game.developer}}
+                  </td>
+              </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <br>
+    <div class="container-fluid text-center">
+      <!--페이징 처리-->
+      <!-- Paginator: paginator 변수,  
+      Page: page_obj 변수
+      페이징 유무 : is_paginated -->
+      {% if is_paginated %}
+      <p>
+      <!--이전 페이지 그룹으로 이동-->
+      {% if has_previous_page %}
+      <a href='/game/search?b={{request.GET.b}}&f={{request.GET.f}}&price={{request.GET.price}}&page={{previous_page}}' style="color: #CDCDCD">◀ 이전 페이지</a>
+      {% endif %}
+      &nbsp;
+      <!--페이지 번호 링크-->
+      {% for page in current_page_group_range %}
+          &nbsp;
+      <!-- page_obj.number: 현재 보고있는 페이지 -->
+          {% if page == page_obj.number %}  
+              <a style="color: #FFC107">{{page}}</a>
+          {% else%}
+          <a href='/game/search?b={{request.GET.b}}&f={{request.GET.f}}&price={{request.GET.price}}&page={{page}}' style="color: #CDCDCD">
+                  {{page}}
+              </a>
+          {% endif %}
+          &nbsp;
+      {% endfor %}
+      <!--다음 페이지 그룹-->
+      &nbsp;
+      {% if has_next_page %}
+      <a href='/game/search/?b={{request.GET.b}}&f={{request.GET.f}}&price={{request.GET.price}}&page={{next_page}}' style="color: #CDCDCD">다음 페이지 ▶</a>
+      {% endif %}
+      </p>
+      {% endif %}
+      <br>
+      <br>
+      <br>
+    </div>
+  </role>
+</div>
+</div>
+
+
+{% endblock content %}

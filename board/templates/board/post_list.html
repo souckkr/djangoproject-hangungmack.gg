@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+
+{% block title %}글 목록{% endblock title %}
+
+{% block content %}
+
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+<link href="dashboard.css" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #272727">
+        <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+                <table class = 'table' style="background-color: #000000; color: #ffffff">
+                    <br>
+                    <thead>
+                        <h5>게시물 검색</h5>
+                    </thead>
+                    <br>
+                    <tbody>
+                        <form class="form-inline my-2 my-md-0" method="get" action="{% url 'board:search' %}">
+                            <input class="form-control" type="text" placeholder="글 제목을 입력하세요" aria-label="Search" name="b" value="{{b}}">
+                            <br>
+                            <button type='submit' class='btn btn-warning' style="font-weight: bold">검색</button>  <!--위에것과 기능은 같음-->
+                            <!-- <button type='reset' class='btn btn-info'>RESET</button> -->
+                        </form>                        
+                    </tbody>
+                </table>
+                <br>
+                <table class = 'table' style="background-color: #000000; color: #ffffff">
+                    <br>
+                    <thead>
+                        <h5>게시판 목록</h5>
+                    </thead>
+                    <tbody>
+                        <a class="nav-link" href="{% url 'board:list' %}" style="color: #FFC107">
+                        자유게시판
+                        </a>
+                        <a class="nav-link" href="#" style="color: #CDCDCD">
+                        공략게시판
+                        </a>
+                        <a class="nav-link" href="#" style="color: #CDCDCD">
+                        유머게시판
+                        </a>
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+      </nav>
+
+      <role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <br>
+        <h2>자유게시판</h2>
+        <br>
+        <table class = 'table' style="color: #ffffff">
+            <thead align = "center" style="background-color: #000000">
+                <tr>
+                    <th style="color: #CDCDCD">글번호</th>
+                    <th style="color: #CDCDCD">제목</th>
+                    <th style="color: #CDCDCD">작성자</th>
+                    <th style="color: #CDCDCD">작성일</th>
+                    <th style="color: #CDCDCD">조회수</th>
+                </tr>
+            </thead>
+            <tbody align = "center" style="background-color: #353535">
+                {% for post in post_list %}
+                    <tr>
+                        <td style="color: #CDCDCD">{{post.pk}}</td>
+                        <td align = "left"><a href="{% url 'board:detail' post.pk %}" style="color: #FFC107">
+                        {{post.title}}
+                        <a> ({{post.comments.count}})</a>
+                        <td style="color: #CDCDCD">{{post.writer.name}}</td>
+                        <td style="color: #CDCDCD">{{post.created_at}}</td>
+                        <td style="color: #CDCDCD">{{post.post_hit}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div align="right"><a class="btn btn-warning" href="/board/create" role="button" style="font-weight: bold">글쓰기</a></div>
+        <br>
+        <br>
+        
+        <div class="container-fluid text-center">
+          <!--페이징 처리-->
+          <!-- Paginator: paginator 변수,  
+          Page: page_obj 변수
+          페이징 유무 : is_paginated -->
+          {% if is_paginated %}
+          <p>
+          <!--이전 페이지 그룹으로 이동-->
+          {% if has_previous_page %}
+              <a href='/board/list?page={{previous_page}}' style="color: #CDCDCD">◀ 이전 페이지</a>
+          {% endif %}
+          &nbsp;
+          <!--페이지 번호 링크-->
+          {% for page in current_page_group_range %}
+              &nbsp;
+          <!-- page_obj.number: 현재 보고있는 페이지 -->
+              {% if page == page_obj.number %}  
+                  <a style="color: #FFC107">{{page}}</a>
+              {% else%}
+                  <a href='/board/list?page={{page}}' style="color: #CDCDCD">
+                      {{page}}
+                  </a>
+              {% endif %}
+              &nbsp;
+          {% endfor %}
+          <!--다음 페이지 그룹-->
+          &nbsp;
+          {% if has_next_page %}
+              <a href='/board/list/?page={{next_page}}' style="color: #CDCDCD">다음 페이지 ▶</a>
+          {% endif %}
+          </p>
+          {% endif %}
+          <br>
+          <br>
+          <br>
+        </div>
+      </role>
+  </div>
+</div>
+
+{% endblock content %}

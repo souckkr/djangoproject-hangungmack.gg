@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+
+{% block title %} GAME_DETAIL {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<br>
+			<h6 style="color: #808080">모든 게임 > {{game.genre}}</h6> 
+			<h2 style="color: #FFC107">{{game.title}}</h2>
+				<p style="color: #CDCDCD">좋아요 :  <!--좋아요 기능-->
+				<a href="{% url 'game:like' game.id %}"></a>
+					{% if user in game.like_users.all %}
+						<a href="{% url 'game:like' game.id %}"><i class="fas fa-heart"></i></a>
+					{% else %}
+						<a href="{% url 'game:like' game.id %}"><i class="far fa-heart"></i></a>
+					{% endif %}
+				&nbsp;&nbsp;&nbsp;&nbsp; {{ game.like_users.count }} 명이 좋아합니다.</p>
+			<br>
+		</div>
+		<div class="col-md-7">
+			{% load embed_video_tags %} 
+			{% video game.video '100% x 100%' %}
+		</div>
+		<!-- 탭 -->
+		<div class="col-md-5">
+			<div class="tabbable" id="tabs-442371">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link active" href="#tab1" data-toggle="tab" style="color: #FFC107">개요</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab2" data-toggle="tab" style="color: #FFC107">최소사양</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab3" data-toggle="tab" style="color: #FFC107">권장사양</a>
+                    </li>
+                    <li class="nav-item">
+						<a class="nav-link" href="#tab4" data-toggle="tab" style="color: #FFC107">추가정보</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane fade show active" id="tab1">
+						<p>
+							<dt>출시일</dt>
+							<dd>{{game.release_at}}</dd>
+							<dt>개발사</dt>
+							<dd>{{game.developer}}</dd>
+							<dt>장르</dt>
+							<dd>{{game.genre}}</dd>
+
+						</p>
+					</div>
+				<div class="tab-pane fade" id="tab2">
+						<p>
+							<dt>PC 최소사양</dt>
+							<dd>{{game.pc_requirements_minimum}}</dd>
+						</p>
+				</div>
+				<div class="tab-pane fade" id="tab3">
+					<p>
+						<dt>PC 권장사양</dt>
+						<dd>{{game.pc_requirements_recommended}}</dd>
+					</p>
+			</div>
+                <div class="tab-pane fade" id="tab4">
+					<br>
+					<p>추가정보</p>
+				</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<br>
+			<br>
+			<h4 style="color: #CDCDCD">게임 소개</h4>
+			<p style="color: #CDCDCD">
+				{{game.info}}
+			</p>
+		</div>
+		<!-- 테이블 -->
+		<div class="col-md-12">
+			<br>
+			<br>
+			<table class = table>
+				<thead  align = "center" style="background-color: #000000; color: #CDCDCD">
+						<th>구매 가능한 에디션</th>
+						<th>가격</th>
+						<th>판매처</th>
+					</tr>
+				</thead>
+				<tbody align = "center" style="background-color: #353535; color: #CDCDCD">
+					{% if game.steam != 0 %}
+					<tr class="table-active" >
+						<td> <!--구매가능한 에디션-->
+							{{game.title}}
+						</td>
+						<td> <!--최저가-->
+							₩ {{game.steam}}
+						</td>
+						<td> <!--최저가 판매처-->
+							<a style="color: #FFC107" href="https://store.steampowered.com/app/{{game.app_id}}" onclick="window.open(this.href); return false;">Steam</a>
+						</td>
+					</tr>
+					{%endif%}
+
+					{% if game.origin != 0 %}
+					<tr class="table-active">
+						<td> <!--구매가능한 에디션-->
+							{{game.title}}
+						</td>
+						<td> <!--최저가-->
+							₩ {{game.origin}}
+						<td> <!--최저가 판매처-->
+							<a style="color: #FFC107" href="https://www.origin.com/kor/ko-kr/search?searchString={{game.title}}" onclick="window.open(this.href); return false;">Origin</a>
+						</td>
+					</tr>
+					{%endif%}
+					
+					{% if game.uplay != 0 %}
+					<tr class="table-active">
+						<td> <!--구매가능한 에디션-->
+							{{game.title}}
+						</td>
+						<td> <!--최저가-->
+							₩ {{game.uplay}}
+						<td> <!--최저가 판매처-->
+							<a style="color: #FFC107" href="https://store.ubi.com/kr/search?q={{game.title}}" onclick="window.open(this.href); return false;">Uplay</a>
+						</td>					
+					</tr>
+					{%endif%}
+
+					{% if game.epic_games != 0 %}
+					<tr class="table-active">
+						<td> <!--구매가능한 에디션-->
+							{{game.title}}
+						</td>
+						<td> <!--최저가-->
+							₩ {{game.epic_games}}
+						<td> <!--최저가 판매처-->
+							<a style="color: #FFC107" href="https://www.epicgames.com/store/ko/browse?q={{game.title}}&sortBy=releaseDate&sortDir=DESC&pageSize=30" onclick="window.open(this.href); return false;">Epic Games</a>
+						</td>
+					</tr>
+					{%endif%}
+
+					{% if game.drmfree != 0 %}
+					<tr class="table-active">
+						<td> <!--구매가능한 에디션-->							
+							{{game.title}}
+						</td>
+						<td> <!--최저가-->
+							₩ {{game.drmfree}}
+						<td> <!--최저가 판매처-->
+							<a style="color: #FFC107" href="https://directg.net/game/game_search.html?searchValue={{game.title}}" onclick="window.open(this.href); return false;">Direct Games</a>
+						</td>
+					</tr>
+					{%endif%}
+				</tbody>
+            </table>
+		</div>
+		<div align="left" class="col-md-12 offset-md-0">    
+			<br>
+			<br>
+			<h4>댓글</h4>
+			<br>
+		</div>
+		{% for comment in game.comments.all %}
+		<div class="col-md-12 offset-md-0" style="border-radius: 10px; margin-bottom: 20px; padding: 40px; background-color: #101010">      
+    		<div class="comment">
+        	    <h5 style="color: #CDCDCD">작성자: {{ comment.comment_writer }}</h5>
+        		<div class="date" style="color: #606060">{{ comment.comment_date }} </div>
+				<br>
+				<p style="color: #CDCDCD">{{ comment.comment_contents }}</p>
+				<a href="{% url 'game:comment_delete' comment.pk %}" style="font-weight: bold" class='btn btn-warning' onclick="return confirm('이 글을 삭제 하겠습니까?')">삭제</a>
+    		</div>
+			{% empty %}
+			<div class="col-md-12 offset-md-0">
+				<p style="color: #FFC107">첫 번째 댓글을 작성해 보세요.</p>
+			</div>
+			{% endfor %}
+			<div class="col-md-12 offset-md-0"><br></div>
+			<div class="col-md-12 offset-md-0" style="border-radius: 10px; padding: 40px; background-color: #101010">
+				<h6 style="color: #CDCDCD">새 댓글 등록</h6>
+				<br>
+				<form action="{% url 'game:comment_write' game.pk %}" method="POST">
+					{% csrf_token %}
+					<input type="text" class="form-control" name="content" placeholder="댓글을 입력해 주세요.">
+					<br>
+					<input style="font-weight: bold" class="btn btn-warning" type="submit" value="등록">
+    			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock content %}  

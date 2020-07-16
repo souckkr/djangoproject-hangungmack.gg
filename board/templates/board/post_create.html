@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}글등록{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+<h2>게시글 등록</h2><br>
+<form method='post' enctype='multipart/form-data'>
+    {% csrf_token %}
+    <input type='hidden' name='writer' value='{{user.pk}}'>
+    <!-- visible_fields: 화면에 보이는 FormField들만 조회 -->
+    {% for field in form.visible_fields %}
+        <label for='{{field.id_for_label}}'>{{field.label_tag}}</label>{{field}}<br>
+        {% if field.errors %}
+            {% for error in field.errors %}
+                {{error}}<br>
+            {% endfor %}
+        {% endif %}
+        <p>
+    
+    {% endfor %}
+
+    {% comment %} {{form.as_p}} {% endcomment %}
+    <button type='submit' class='btn btn-warning'>글등록</button>
+</form>
+</div>
+</div>
+</div>
+{% endblock content %}

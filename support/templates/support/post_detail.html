@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} POST_DETAIL {% endblock title %}
+
+{% block content %}
+<br><br>
+<h2> {{post.pk}}. {{post.title}} </h2>
+<div>
+<ul class='list-group'>
+    <li class='list-group-post'> POST TITLE : {{post.title}}</li><br>
+    <li class='list-group-post'> POST CATEGORY : {{post.category.category_name}}</li><br>
+
+   
+    
+</ul>
+</div>
+<div>
+    {{post.content|linebreaksbr}}
+</div>
+<br>
+
+<br>
+{% if user.is_authenticated %}
+    <p>
+    <a href="{%url 'support:update' post.pk %}" class='btn btn-primary'>UPDATE</a>
+    <a href="{%url 'support:delete' post.pk %}" class='btn btn-primary' 
+        onclick="return confirm('삭제하시겠습니까?????????????????????????????????????????????????????')">DELETE</a> <!--확인창띄우기-->
+    <a href="{% url 'support:list' %}" class='btn btn-secondary'>목록</a>
+
+    </p>
+{% endif %}
+{% endblock content %}

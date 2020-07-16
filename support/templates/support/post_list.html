@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}글 목록{% endblock title %}
+
+{% block content %}
+
+<link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+<link href="dashboard.css" rel="stylesheet">
+
+<div class="container-fluid">
+    <div class="row">
+      <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse" style="background-color: #272727">
+        <div class="sidebar-sticky pt-3">
+            <ul class="nav flex-column">
+                <table class = 'table' style="background-color: #000000; color: #ffffff">
+                    <br>
+                    <thead>
+                        <h5>지원 메뉴</h5>
+                    </thead>
+                    <tbody>
+                        <a class="nav-link" href="{% url 'support:list' %}" style="color: #FFC107">
+                        자주 묻는 질문
+                        </a>
+                        <a class="nav-link" href="#" style="color: #CDCDCD">
+                        공지사항
+                        </a>
+                    </tbody>
+                </table>
+            </ul>
+        </div>
+      </nav>
+      <role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        <br>
+        <h2>한증막.GG에 대하여</h2>
+        <br>
+        <div class="row">
+            <div class="col-md-12">                    
+                <div id="card-345594">
+                    {% for post in post_list %}
+                    <div class="card" style="background-color: #000000">
+                        <div class="card-header">
+                                <a class="card-link" data-toggle="collapse"  href="#card{{forloop.counter}}" aria-expanded="false" style="color: #FFC107">{{post.title}}</a>
+                        </div>
+                        <div id="card{{forloop.counter}}" class="collapse" aria-expanded="false">
+                            <div class="card-body" style="background-color: #151515">
+                                <p style="color: #CDCDCD">{{post.content|safe}}</p>
+                                <div>
+                                    {% if post.up_file %}
+                                        File : <a href="{{post.up_file.url}}" style="color: #CDCDCD"> {{post.up_file}}</a>
+                                    {% endif %}
+                                    <br>
+                                    {% if post.up_image %}
+                                        Image : <a href="{{post.up_image.url}}" style="color: #CDCDCD"> {{post.up_image}}</a>
+                                        <br>
+                                        <img src = '{{post.up_image.url}}'>
+                                    {% endif %}
+                                </div>
+                                <a href="{%url 'support:update' post.pk %}" class='btn btn-primary'>UPDATE</a>
+                            </div>
+                        </div>  
+                    </div>
+                    <br>
+                    {% endfor %}
+                </div>                    
+            </div>
+        </div>
+      </role>
+    </div>
+</div>
+<div align="right"><a class="btn btn-warning" href="/support/create" role="button" style="font-weight: bold">글쓰기</a></div>
+    
+{% endblock content %}

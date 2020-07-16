@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title%}제품정보 수정{% endblock title %}
+
+{% block content%}
+<h1>제품정보 수정</h1>
+<form method='post'>
+    {% csrf_token %}
+    {{form.media}}
+    {{form.as_p}}
+    <p>
+        <button type='submit' class='btn btn-primary'>UPDATE</button>
+        <a href="{%url 'support:delete' post.pk %}" class='btn btn-primary' 
+        onclick="return confirm('삭제하시겠습니까?????????????????????????????????????????????????????')">DELETE</a> <!--확인창띄우기-->
+
+    </p>
+</form>
+{% endblock content %}
