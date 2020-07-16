@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'accounts',
     'board',
     # 댓글기능
-    'disqus',
     'django.contrib.sites',
     # 썸네일
     'imagekit',
